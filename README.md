@@ -12,4 +12,7 @@ Este é um projeto de aplicativo para gerenciamento de clientes, desenvolvido co
 
 ![Excluir cliente](./App%20Images/Screenshot_excluir%20cliente.png)
 
+#Projeto Teste.
+executar o projeto teste (alterar para execução principal.)
+
 ---
