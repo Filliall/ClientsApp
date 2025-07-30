@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:ClientsApp.ViewModels"
-             xmlns:behaviors="clr-namespace:ClientsApp.Utils.Behaviors"
-             x:DataType="viewmodels:AddClientViewModel"
-             x:Class="ClientsApp.Views.AddClientPage"
+              xmlns:behaviors="clr-namespace:ClientsApp.Utils.Behaviors"
+             x:DataType="viewmodels:EditClientViewModel"
+             x:Class="ClientsApp.Views.EditClientPage"
              Title="{Binding Title}"
              BackgroundColor="Transparent">
 
@@ -41,7 +41,7 @@
 
                     <Label Text="Sobrenome" Style="{StaticResource SteampunkLabel}" />
                     <Border Style="{StaticResource SteampunkEntryBorder}">
-                        <Entry Text="{Binding LastName}" Placeholder="Sobrenome do cliente" Style="{StaticResource SteampunkEntry}">
+                        <Entry Text="{Binding LastName}" Placeholder="Sobrenome do cliente" Style="{StaticResource SteampunkEntry}" >
                             <Entry.Behaviors>
                                 <behaviors:AlphanumericValidationBehavior />
                             </Entry.Behaviors>
@@ -59,9 +59,9 @@
 
                     <Label Text="Idade" Style="{StaticResource SteampunkLabel}" />
                     <Border Style="{StaticResource SteampunkEntryBorder}">
-                        <Entry Text="{Binding Age}" Keyboard="Numeric" Placeholder="Idade do cliente" Style="{StaticResource SteampunkEntry}">
+                        <Entry Text="{Binding Age}" Keyboard="Numeric" Placeholder="Idade do cliente" Style="{StaticResource SteampunkEntry}" >
                             <Entry.Behaviors>
-                                <behaviors:NumericValidationBehavior/>
+                                <behaviors:AlphanumericValidationBehavior />
                             </Entry.Behaviors>
                         </Entry>
                     </Border>

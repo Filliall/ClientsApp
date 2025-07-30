@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace ClientsApp.Behaviors
+namespace ClientsApp.Utils.Behaviors
 {
     /// <summary>
     /// Um Behavior que restringe a entrada em um Entry para caracteres alfanuméricos,

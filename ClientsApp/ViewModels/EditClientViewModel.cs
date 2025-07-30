@@ -5,15 +5,14 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ClientsApp.ViewModels
 {
-    [QueryProperty(nameof(Client), "ClientAdd")]
-    public partial class AddClientViewModel : BaseViewModel
+    [QueryProperty(nameof(Client), "ClientEdit")]
+    public partial class EditClientViewModel : BaseViewModel
     {
+        private Client client;
         private readonly IClientService _clientService;
         private readonly IDialogService _dialogService;
-        private readonly IAppNavigationService _navigationService;
         public IAsyncRelayCommand SaveClientAsyncCommand { get; }
         public IAsyncRelayCommand CancelAsyncCommand { get; }
-
 
         [ObservableProperty]
         private int _id;
@@ -30,13 +29,19 @@ namespace ClientsApp.ViewModels
 
         public Client? Client { set => SetClientForEditing(value); }
 
-        public AddClientViewModel(IClientService clientService, IDialogService dialogService, IAppNavigationService navigationService)
+        public EditClientViewModel(Client client, IClientService clientService, IDialogService dialogService)
         {
+            Client = client;
+            SaveClientAsyncCommand = new AsyncRelayCommand(SaveClientAsync!);
+            CancelAsyncCommand = new AsyncRelayCommand(GoBackAsync!);
             _clientService = clientService;
             _dialogService = dialogService;
-            _navigationService = navigationService;
-            SaveClientAsyncCommand = new AsyncRelayCommand(SaveClientAsync!);
-            CancelAsyncCommand = new AsyncRelayCommand(CancelAsync!);
+        }
+
+        [RelayCommand(CanExecute = nameof(IsNotBusy))]
+        private async Task GoBackAsync()
+        {
+            await Shell.Current.Navigation.PopModalAsync();
         }
 
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
@@ -71,7 +76,7 @@ namespace ClientsApp.ViewModels
                 }
 
                 // Navega de volta para a página anterior
-                await _navigationService.GoBackAsync();
+                await GoBackAsync();
             }
             catch (System.Exception ex)
             {
@@ -83,11 +88,6 @@ namespace ClientsApp.ViewModels
             }
         }
 
-        [RelayCommand(CanExecute = nameof(IsNotBusy))]
-        private async Task CancelAsync()
-        {
-            await _navigationService.GoBackAsync();
-        }
 
         private void SetClientForEditing(Client? client)
         {
