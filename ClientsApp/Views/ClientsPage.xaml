@@ -48,12 +48,17 @@
                                     <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=GoToEditClientPageAsyncCommand}"
                                          CommandParameter="{Binding .}"
                                          WidthRequest="32" HeightRequest="32"
+                                                 SemanticProperties.Description="Editar cliente"
+                                                  SemanticProperties.Hint="{Binding Name, StringFormat='Toque para editar o cliente: {0}'}"
                                          Source="edit_gear_icon.png"/>
                                     <!-- Ícone de Excluir Steampunk -->
                                     <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=DeleteClientAsyncCommand}"
                                          CommandParameter="{Binding .}"
                                          WidthRequest="32" HeightRequest="32"
-                                         Source="delete_cross_icon.png"/>
+                                                 SemanticProperties.Description="Excluir cliente"
+                                                 SemanticProperties.Hint="{Binding Name, StringFormat='Toque para excluir o cliente: {0}'}"
+                                                
+                                        Source="delete_cross_icon.png"/>
                                 </HorizontalStackLayout>
                             </Grid>
 
@@ -78,6 +83,9 @@
                      WidthRequest="60"
                      HeightRequest="60"
                      VerticalOptions="End" HorizontalOptions="End"
+                      SemanticProperties.Description="Excluir cliente"
+ SemanticProperties.Hint="Toque para adcionar o cliente'}"
+                                    
                      Margin="20" />
     </Grid>
 </ContentPage>
