@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ClientsApp.ViewModels"
+             xmlns:behaviors="clr-namespace:ClientsApp.Behaviors"
+             x:DataType="viewmodels:AddClientViewModel"
+             x:Class="ClientsApp.Views.AddClientPage"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Margin="20">
+            <Label Text="Nome" />
+            <Entry Text="{Binding Name}" Placeholder="Nome do cliente" Style="{StaticResource FormField}">
+                <Entry.Behaviors>
+                    <behaviors:AlphanumericValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Text="Sobrenome" />
+            <Entry Text="{Binding LastName}" Placeholder="Sobrenome do cliente" Style="{StaticResource FormField}">
+                <Entry.Behaviors>
+                    <behaviors:AlphanumericValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Text="Endereço" />
+            <Entry Text="{Binding Address}" Placeholder="Endereço do cliente" Style="{StaticResource FormField}">
+                <Entry.Behaviors>
+                    <behaviors:AlphanumericValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Text="Idade" />
+            <Entry Text="{Binding Age}" Keyboard="Numeric" Placeholder="Idade do cliente" Style="{StaticResource FormField}">
+                <Entry.Behaviors>
+                    <behaviors:NumericValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">
+                <Button Grid.Column="0" Text="Cancelar" Command="{Binding CancelAsyncCommand}" IsEnabled="{Binding IsNotBusy}" Style="{StaticResource SecondaryButton}" />
+                <Button Grid.Column="1" Text="Salvar" Command="{Binding SaveClientAsyncCommand}" IsEnabled="{Binding IsNotBusy}" Style="{StaticResource PrimaryButton}" />
+            </Grid>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

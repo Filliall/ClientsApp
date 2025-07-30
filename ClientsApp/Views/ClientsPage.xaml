@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ClientsApp.ViewModels"
+             xmlns:models="clr-namespace:ClientsApp.Models"
+             x:DataType="viewmodels:ClientsViewModel"
+             x:Class="ClientsApp.Views.ClientsPage"
+             Title="Lista de Clientes">
+
+    <Grid RowDefinitions="*">
+        <RefreshView Command="{Binding LoadClientsAsyncCommand}" IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding Clients}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Client">
+                        <Frame Style="{StaticResource CardView}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=GoToEditClientPageAsyncCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
+                                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                    <Label FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource Primary}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Name}" />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding LastName}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Text="{Binding Address}" TextColor="{StaticResource Gray500}" />
+                                    <Label Text="{Binding Age, StringFormat='{0} anos'}" TextColor="{StaticResource Gray500}" />
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="1" Text="🗑️" FontSize="20" BackgroundColor="Transparent" TextColor="{StaticResource Red}"
+                                        VerticalOptions="Center" Padding="0"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=DeleteClientAsyncCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Label Text="Nenhum cliente encontrado" FontSize="18" TextColor="{StaticResource Gray500}" />
+                        <Label Text="Adicione um novo cliente no botão '+'" FontSize="14" TextColor="{StaticResource Gray300}" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator Grid.Row="0" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+
+        <Button Text="+"
+                Style="{StaticResource PrimaryButton}"
+                Command="{Binding GoToAddClientPageAsyncCommand}"
+                WidthRequest="50"
+                VerticalOptions="End" HorizontalOptions="End"
+                Margin="20" />
+    </Grid>
+</ContentPage>

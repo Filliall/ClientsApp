@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- App icon background. A simple blue rounded square. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="456" height="456" viewBox="0 0 24 24">
+  <!-- Background: A blue rounded square, common for app icons. -->
+  <rect width="24" height="24" rx="4.5" fill="#007AFF"/>
+</svg>
