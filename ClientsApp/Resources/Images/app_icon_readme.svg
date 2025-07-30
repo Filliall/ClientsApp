@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
+  <!-- Fundo -->
+  <rect width="24" height="24" fill="#0A0A14"/>
+  <!-- Símbolo -->
+  <path fill="#FDFE02" d="M12 2l-10 6v8l10 6 10-6v-8l-10-6zm0 2.236l7.416 4.45-7.416 4.45-7.416-4.45 7.416-4.45zm-8 5.764v4l8 4.8v-4.8l-8-4zm16 0l-8 4.8v4.8l8-4.8v-4z"/>
+</svg>

@@ -10,7 +10,8 @@ namespace ClientsApp.ViewModels
     {
         private readonly IClientService _clientService;
         private readonly IDialogService _dialogService;
-        private readonly IAppNavigationService _navigationService;
+        private readonly INavigationService _navigationService;
+
         public IAsyncRelayCommand GoToAddClientPageAsyncCommand { get; }
         public IAsyncRelayCommand<Client> GoToEditClientPageAsyncCommand { get; }
         public IAsyncRelayCommand<Client> DeleteClientAsyncCommand { get; }
@@ -18,7 +19,7 @@ namespace ClientsApp.ViewModels
         public ObservableCollection<Client> Clients { get; } = new();
 
 
-        public ClientsViewModel(IClientService clientService, IDialogService dialogService, IAppNavigationService navigationService)
+        public ClientsViewModel(IClientService clientService, IDialogService dialogService, INavigationService navigationService)
         {
             _clientService = clientService;
             _dialogService = dialogService;
@@ -54,21 +55,20 @@ namespace ClientsApp.ViewModels
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private async Task GoToAddClientPageAsync()
         {
-            var addViewModel = new AddClientViewModel(_clientService, _dialogService, _navigationService);
-            var addPage = new AddClientPage { BindingContext = addViewModel };
-            await Shell.Current.Navigation.PushModalAsync(addPage, true);
-
+            var detailViewModel = new ClientDetailViewModel(_clientService, _dialogService, _navigationService);
+            detailViewModel.PrepareViewModel(null);
+            var detailPage = new ClientDetailPage { BindingContext = detailViewModel };
+            await _navigationService.PushModalAsync<ClientDetailViewModel>(detailPage);
         }
 
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private async Task GoToEditClientPageAsync(Client client)
         {
-            if (client == null)
-                return;
-
-            var editViewModel = new EditClientViewModel(client, _clientService, _dialogService);
-            var editPage = new EditClientPage { BindingContext = editViewModel };
-            await Shell.Current.Navigation.PushModalAsync(editPage, true);
+            if (client == null) return;
+            var detailViewModel = new ClientDetailViewModel(_clientService, _dialogService, _navigationService);
+            detailViewModel.PrepareViewModel(client);
+            var detailPage = new ClientDetailPage { BindingContext = detailViewModel };
+            await _navigationService.PushModalAsync<ClientDetailViewModel>(detailPage);
         }
 
         [RelayCommand(CanExecute = nameof(IsNotBusy))]

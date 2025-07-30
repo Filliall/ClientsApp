@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Steampunk style gear icon for "edit" action -->
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6F4F28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
-  <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-  <path d="M12 2v2"/>
-  <path d="M12 20v2"/>
-  <path d="m4.93 4.93 1.41 1.41"/>
-  <path d="m17.66 17.66 1.41 1.41"/>
-  <path d="M2 12h2"/>
-  <path d="M20 12h2"/>
-  <path d="m4.93 19.07 1.41-1.41"/>
-  <path d="m17.66 6.34 1.41-1.41"/>
+<!-- Cyberpunk style "edit" icon -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#00F0FF">
+  <path d="M19.769 8.923l-8.692 8.692-1.077 3.231 3.231-1.077 8.692-8.692-2.154-2.154zm1.077-1.077l-2.154-2.154-1.077 1.077 2.154 2.154 1.077-1.077zM3 21h18v2H3z"/>
 </svg>

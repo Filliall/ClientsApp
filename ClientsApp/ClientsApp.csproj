@@ -117,15 +117,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\EditClientPage.xaml.cs">
-	    <DependentUpon>EditClientPage.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Views\EditClientPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <Compile Remove="Services\AppNavigationService.cs" />
+	  <Compile Remove="Services\IAppNavigationService.cs" />
+	  <Compile Remove="ViewModels\AddClientViewModel.cs" />
+	  <Compile Remove="ViewModels\EditClientViewModel.cs" />
 	</ItemGroup>
 
 </Project>

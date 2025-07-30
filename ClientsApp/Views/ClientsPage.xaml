@@ -5,21 +5,23 @@
              xmlns:models="clr-namespace:ClientsApp.Models"
              x:DataType="viewmodels:ClientsViewModel"
              x:Class="ClientsApp.Views.ClientsPage"
-             Title="Lista de Clientes">
+             Title="--[REGISTRO DE CLIENTES]--"
+             BackgroundColor="{StaticResource CyberBackground}">
 
     <Grid RowDefinitions="*">
         <RefreshView Command="{Binding LoadClientsAsyncCommand}" IsRefreshing="{Binding IsBusy}">
             <CollectionView ItemsSource="{Binding Clients}"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Client">
-                        <Border Stroke="{StaticResource SteampunkLeather}"
-                        StrokeThickness="2"
+                            SelectionMode="None" FlexLayout.AlignSelf="Auto" ItemSizingStrategy="MeasureAllItems"
+                           >
+                <CollectionView.ItemTemplate >
+                    <DataTemplate x:DataType="models:Client" >
+                        <Border Stroke="{StaticResource CyberCyan}"
+                        StrokeThickness="1" HeightRequest="120"
                         Margin="15,10"
                         Padding="5"
-                        BackgroundColor="{StaticResource SteampunkBrass}">
+                        BackgroundColor="{StaticResource CyberPanel}">
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8"/>
+                                <RoundRectangle CornerRadius="0"/>
                             </Border.StrokeShape>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer
@@ -27,24 +29,17 @@
                                     CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
                             <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto" Padding="10">
-
-                                <!-- Rebites nos cantos (detalhe visual) -->
-                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="Start" VerticalOptions="Start"/>
-                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="End" VerticalOptions="Start"/>
-                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="Start" VerticalOptions="End" Grid.Row="1"/>
-                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="End" VerticalOptions="End" Grid.Row="1" Grid.Column="1"/>
-
                                 <!-- Container para as informações do cliente -->
                                 <VerticalStackLayout Grid.Column="0" Grid.RowSpan="2" Spacing="5" VerticalOptions="Center">
                                     <!-- Nome e Sobrenome -->
                                     <HorizontalStackLayout Spacing="5">
-                                        <Label Text="{Binding Name}" FontFamily="FellEnglish" FontSize="24" TextColor="{StaticResource SteampunkText}" />
-                                        <Label Text="{Binding LastName}" FontFamily="FellEnglish" FontSize="24" TextColor="{StaticResource SteampunkText}" />
+                                        <Label Text="{Binding Name}" FontFamily="Orbitron" FontSize="24" TextColor="{StaticResource CyberText}" />
+                                        <Label Text="{Binding LastName}" FontFamily="Orbitron" FontSize="24" TextColor="{StaticResource CyberText}" />
                                     </HorizontalStackLayout>
                                     <!-- Idade -->
-                                    <Label Text="{Binding Age, StringFormat='Idade: {0}'}" FontFamily="FellEnglish" FontSize="16" TextColor="{StaticResource SteampunkText}" />
+                                    <Label Text="{Binding Age, StringFormat='Idade: {0}'}" FontFamily="Orbitron" FontSize="16" TextColor="{StaticResource CyberText}" />
                                     <!-- Endereço -->
-                                    <Label Text="{Binding Address}" FontFamily="FellEnglish" FontSize="16" TextColor="{StaticResource SteampunkText}" />
+                                    <Label Text="{Binding Address}" FontFamily="Orbitron" FontSize="16" TextColor="{StaticResource CyberText}" />
                                 </VerticalStackLayout>
 
                                 <!-- Botões de Ação -->
@@ -68,15 +63,15 @@
 
                 <CollectionView.EmptyView>
                     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
-                        <Label Text="Nenhum cliente encontrado" FontSize="18" TextColor="{StaticResource Gray500}" />
-                        <Label Text="Adicione um novo cliente no botão '+'" FontSize="14" TextColor="{StaticResource Gray300}" />
+                        <Label Text="--[NENHUM SINAL DETECTADO]--" Style="{StaticResource CyberpunkLabel}" FontSize="18" />
+                        <Label Text="Conecte um novo cliente no botão [+]" Style="{StaticResource CyberpunkLabel}" FontSize="14" Opacity="0.7"/>
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
             </CollectionView>
         </RefreshView>
 
         <ActivityIndicator Grid.Row="0" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
+                           HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource CyberYellow}" />
 
         <ImageButton Source="add_gear_icon.png"
                      Command="{Binding GoToAddClientPageAsyncCommand}"

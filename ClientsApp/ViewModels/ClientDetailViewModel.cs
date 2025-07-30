@@ -5,15 +5,16 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ClientsApp.ViewModels
 {
-    [QueryProperty(nameof(Client), "ClientAdd")]
-    public partial class AddClientViewModel : BaseViewModel
+    /// <summary>
+    /// ViewModel unificado para adicionar e editar clientes.
+    /// </summary>
+    public partial class ClientDetailViewModel : BaseViewModel
     {
         private readonly IClientService _clientService;
         private readonly IDialogService _dialogService;
-        private readonly IAppNavigationService _navigationService;
+        private readonly INavigationService _navigationService;
         public IAsyncRelayCommand SaveClientAsyncCommand { get; }
         public IAsyncRelayCommand CancelAsyncCommand { get; }
-
 
         [ObservableProperty]
         private int _id;
@@ -28,23 +29,54 @@ namespace ClientsApp.ViewModels
         [ObservableProperty]
         private string _title = "Adicionar Cliente";
 
-        public Client? Client { set => SetClientForEditing(value); }
-
-        public AddClientViewModel(IClientService clientService, IDialogService dialogService, IAppNavigationService navigationService)
+        public ClientDetailViewModel(IClientService clientService, IDialogService dialogService, INavigationService navigationService)
         {
             _clientService = clientService;
             _dialogService = dialogService;
             _navigationService = navigationService;
-            SaveClientAsyncCommand = new AsyncRelayCommand(SaveClientAsync!);
-            CancelAsyncCommand = new AsyncRelayCommand(CancelAsync!);
+
+            SaveClientAsyncCommand = new AsyncRelayCommand(SaveClientAsync);
+            CancelAsyncCommand = new AsyncRelayCommand(GoBackAsync);
+        }
+
+        /// <summary>
+        /// Prepara o ViewModel para adicionar um novo cliente ou editar um existente.
+        /// </summary>
+        public void PrepareViewModel(Client? client)
+        {
+            if (client != null && client.Id != 0)
+            {
+                Id = client.Id;
+                Name = client.Name;
+                LastName = client.LastName;
+                Address = client.Address;
+                Age = client.Age;
+                Title = "Editar Cliente";
+            }
+            else
+            {
+                // Reset for new client
+                Id = 0;
+                Name = string.Empty;
+                LastName = string.Empty;
+                Address = string.Empty;
+                Age = 0;
+                Title = "Adicionar Cliente";
+            }
+        }
+
+        [RelayCommand(CanExecute = nameof(IsNotBusy))]
+        private async Task GoBackAsync()
+        {
+            await _navigationService.PopModalAsync();
         }
 
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private async Task SaveClientAsync()
         {
-            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(LastName))
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(Address) || Age <= 0 || Age > 120)
             {
-                await _dialogService.DisplayAlert("Erro de Validação", "Nome e Sobrenome são obrigatórios.", "OK");
+                await _dialogService.DisplayAlert("Erro de Validação", "Por favor, preencha todos os campos corretamente.", "OK");
                 return;
             }
 
@@ -62,16 +94,11 @@ namespace ClientsApp.ViewModels
                 };
 
                 if (clientToSave.Id == 0)
-                {
                     await _clientService.AddClientAsync(clientToSave);
-                }
                 else
-                {
                     await _clientService.UpdateClientAsync(clientToSave);
-                }
 
-                // Navega de volta para a página anterior
-                await _navigationService.GoBackAsync();
+                await GoBackAsync();
             }
             catch (System.Exception ex)
             {
@@ -80,25 +107,6 @@ namespace ClientsApp.ViewModels
             finally
             {
                 IsBusy = false;
-            }
-        }
-
-        [RelayCommand(CanExecute = nameof(IsNotBusy))]
-        private async Task CancelAsync()
-        {
-            await _navigationService.GoBackAsync();
-        }
-
-        private void SetClientForEditing(Client? client)
-        {
-            if (client != null)
-            {
-                Id = client.Id;
-                Name = client.Name;
-                LastName = client.LastName;
-                Address = client.Address;
-                Age = client.Age;
-                Title = "Editar Cliente";
             }
         }
     }
