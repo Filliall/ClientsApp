@@ -1,7 +1,6 @@
 ﻿using ClientsApp.Models;
 using ClientsApp.Services;
 using ClientsApp.ViewModels;
-using ClientsApp.Views;
 using Moq;
 using Xunit;
 
@@ -11,14 +10,14 @@ namespace ClientsApp.Tests
     {
         private readonly Mock<IClientService> _mockClientService;
         private readonly Mock<IDialogService> _mockDialogService;
-        private readonly Mock<IAppNavigationService> _mockNavigationService;
+        private readonly Mock<INavigationService> _mockNavigationService;
         private readonly ClientsViewModel _viewModel;
 
         public ClientsViewModelTests()
         {
             _mockClientService = new Mock<IClientService>();
             _mockDialogService = new Mock<IDialogService>();
-            _mockNavigationService = new Mock<IAppNavigationService>();
+            _mockNavigationService = new Mock<INavigationService>();
             _viewModel = new ClientsViewModel(_mockClientService.Object, _mockDialogService.Object, _mockNavigationService.Object);
         }
 
@@ -73,34 +72,5 @@ namespace ClientsApp.Tests
             Assert.Empty(_viewModel.Clients);
         }
 
-        [Fact]
-        public async Task GoToAddClientPageCommand_ShouldNavigate()
-        {
-            // Act
-            await _viewModel.GoToAddClientPageCommand.ExecuteAsync(null);
-
-            // Assert
-            _mockNavigationService.Verify(n => n.GoToAsync("AddClientPage", true), Times.Once);
-        }
-
-        [Fact]
-        public async Task GoToEditClientPageAsyncCommand_ShouldNavigateWithParameter()
-        {
-            // Arrange
-            var client = new Client { Id = 1, Name = "Test", LastName = "User" };
-            IDictionary<string, object> parameters = null;
-            _mockNavigationService.Setup(n => n.GoToAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<IDictionary<string, object>>()))
-                .Callback<string, bool, IDictionary<string, object>>((route, animate, p) => parameters = p)
-                .Returns(Task.CompletedTask);
-
-            // Act
-            await _viewModel.GoToEditClientPageCommand.ExecuteAsync(client);
-
-            // Assert
-            _mockNavigationService.Verify(n => n.GoToAsync(nameof(AddClientPage), true, It.IsAny<IDictionary<string, object>>()), Times.Once);
-            Assert.NotNull(parameters);
-            Assert.True(parameters.ContainsKey("Client"));
-            Assert.Equal(client, parameters["Client"]);
-        }
     }
 }

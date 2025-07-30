@@ -52,7 +52,13 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\delete_cross_icon.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<MauiImage Update="Resources\Images\edit_gear_icon.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -108,6 +114,13 @@
 
 	<ItemGroup>
 	  <PRIResource Remove="Platforms\Android\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Services\AppNavigationService.cs" />
+	  <Compile Remove="Services\IAppNavigationService.cs" />
+	  <Compile Remove="ViewModels\AddClientViewModel.cs" />
+	  <Compile Remove="ViewModels\EditClientViewModel.cs" />
 	</ItemGroup>
 
 </Project>

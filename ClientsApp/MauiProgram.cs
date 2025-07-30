@@ -16,6 +16,8 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("IMFellEnglish-Regular.ttf", "FellEnglish");
+                fonts.AddFont("Orbitron-Regular.ttf", "CyberpunkFont");
             });
 
 #if DEBUG
@@ -24,15 +26,16 @@ public static class MauiProgram
         // Serviços
         builder.Services.AddSingleton<IClientService, ClientService>();
         builder.Services.AddSingleton<IDialogService, DialogService>();
-        builder.Services.AddSingleton<IAppNavigationService, AppNavigationService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         // ViewModels
         builder.Services.AddTransient<ClientsViewModel>();
-        builder.Services.AddTransient<AddClientViewModel>();
+        builder.Services.AddTransient<ClientDetailViewModel>();
 
         // Views (Páginas)
         builder.Services.AddTransient<ClientsPage>();
-        builder.Services.AddTransient<AddClientPage>();
+        builder.Services.AddTransient<ClientDetailPage>();
+
 
         return builder.Build();
     }

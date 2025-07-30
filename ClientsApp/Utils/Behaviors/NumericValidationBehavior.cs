@@ -1,6 +1,6 @@
 ﻿using ClientsApp.Services;
 
-namespace ClientsApp.Behaviors
+namespace ClientsApp.Utils.Behaviors
 {
     public class NumericValidationBehavior : Behavior<Entry>
     {

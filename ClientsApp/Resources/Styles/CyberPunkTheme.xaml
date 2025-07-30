@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Cores primárias do tema Cyberpunk -->
+    <Color x:Key="CyberYellow">#FDFE02</Color>
+    <Color x:Key="CyberCyan">#00F0FF</Color>
+    <Color x:Key="CyberMagenta">#FF00FF</Color>
+    <Color x:Key="CyberBackground">#0A0A14</Color>
+    <Color x:Key="CyberPanel">#1A1A2E</Color>
+    <Color x:Key="CyberText">#EAEAEA</Color>
+
+    <!-- Estilos para formulários -->
+    <Style x:Key="CyberpunkLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource CyberText}" />
+        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Margin" Value="0,10,0,5" />
+    </Style>
+
+    <Style x:Key="CyberpunkEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource CyberText}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource CyberCyan}" />
+        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Borda com brilho neon para os campos de texto -->
+    <Style x:Key="CyberpunkEntryBorder" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource CyberPanel}" />
+        <Setter Property="Stroke" Value="{StaticResource CyberCyan}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="10,0" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="0"/>
+        </Setter>
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CyberCyan}" Opacity="0.8" Radius="8" />
+        </Setter>
+    </Style>
+
+    <Style x:Key="CyberpunkPrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource CyberYellow}" />
+        <Setter Property="TextColor" Value="{StaticResource CyberBackground}" />
+        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+
+    <Style x:Key="CyberpunkSecondaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource CyberCyan}" />
+        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="BorderColor" Value="{StaticResource CyberCyan}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+</ResourceDictionary>

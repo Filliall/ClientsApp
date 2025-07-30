@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace ClientsApp.Converters
+namespace ClientsApp.Utils.Converters
 {
     public class InverseBoolConverter : IValueConverter
     {
