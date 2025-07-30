@@ -1,8 +1,8 @@
 using ClientsApp.Models;
 using ClientsApp.Services;
 using ClientsApp.Views;
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 
 namespace ClientsApp.ViewModels
 {
@@ -54,7 +54,10 @@ namespace ClientsApp.ViewModels
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private async Task GoToAddClientPageAsync()
         {
-            await _navigationService.GoToAsync(nameof(AddClientPage), true);
+            var addViewModel = new AddClientViewModel(_clientService, _dialogService, _navigationService);
+            var addPage = new AddClientPage { BindingContext = addViewModel };
+            await Shell.Current.Navigation.PushModalAsync(addPage, true);
+
         }
 
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
@@ -63,10 +66,9 @@ namespace ClientsApp.ViewModels
             if (client == null)
                 return;
 
-            await _navigationService.GoToAsync(nameof(AddClientPage), true, new Dictionary<string, object>
-            {
-                { "Client", client }
-            });
+            var editViewModel = new EditClientViewModel(client, _clientService, _dialogService);
+            var editPage = new EditClientPage { BindingContext = editViewModel };
+            await Shell.Current.Navigation.PushModalAsync(editPage, true);
         }
 
         [RelayCommand(CanExecute = nameof(IsNotBusy))]

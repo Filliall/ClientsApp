@@ -13,33 +13,56 @@
                             SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Client">
-                        <Frame Style="{StaticResource CardView}">
-                            <Frame.GestureRecognizers>
+                        <Border Stroke="{StaticResource SteampunkLeather}"
+                        StrokeThickness="2"
+                        Margin="15,10"
+                        Padding="5"
+                        BackgroundColor="{StaticResource SteampunkBrass}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=GoToEditClientPageAsyncCommand}"
                                     CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-                            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
-                                <VerticalStackLayout Grid.Column="0" Spacing="5">
-                                    <Label FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource Primary}">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding Name}" />
-                                                <Span Text=" " />
-                                                <Span Text="{Binding LastName}" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                    <Label Text="{Binding Address}" TextColor="{StaticResource Gray500}" />
-                                    <Label Text="{Binding Age, StringFormat='{0} anos'}" TextColor="{StaticResource Gray500}" />
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto" Padding="10">
+
+                                <!-- Rebites nos cantos (detalhe visual) -->
+                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="End" VerticalOptions="Start"/>
+                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="Start" VerticalOptions="End" Grid.Row="1"/>
+                                <Ellipse Fill="{StaticResource SteampunkLeather}" WidthRequest="8" HeightRequest="8" HorizontalOptions="End" VerticalOptions="End" Grid.Row="1" Grid.Column="1"/>
+
+                                <!-- Container para as informações do cliente -->
+                                <VerticalStackLayout Grid.Column="0" Grid.RowSpan="2" Spacing="5" VerticalOptions="Center">
+                                    <!-- Nome e Sobrenome -->
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="{Binding Name}" FontFamily="FellEnglish" FontSize="24" TextColor="{StaticResource SteampunkText}" />
+                                        <Label Text="{Binding LastName}" FontFamily="FellEnglish" FontSize="24" TextColor="{StaticResource SteampunkText}" />
+                                    </HorizontalStackLayout>
+                                    <!-- Idade -->
+                                    <Label Text="{Binding Age, StringFormat='Idade: {0}'}" FontFamily="FellEnglish" FontSize="16" TextColor="{StaticResource SteampunkText}" />
+                                    <!-- Endereço -->
+                                    <Label Text="{Binding Address}" FontFamily="FellEnglish" FontSize="16" TextColor="{StaticResource SteampunkText}" />
                                 </VerticalStackLayout>
 
-                                <Button Grid.Column="1" Text="🗑️" FontSize="20" BackgroundColor="Transparent" TextColor="{StaticResource Red}"
-                                        VerticalOptions="Center" Padding="0"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=DeleteClientAsyncCommand}"
-                                        CommandParameter="{Binding .}" />
+                                <!-- Botões de Ação -->
+                                <HorizontalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Spacing="10" VerticalOptions="Center">
+                                    <!-- Ícone de Editar Steampunk -->
+                                    <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=GoToEditClientPageAsyncCommand}"
+                                         CommandParameter="{Binding .}"
+                                         WidthRequest="32" HeightRequest="32"
+                                         Source="edit_gear_icon.png"/>
+                                    <!-- Ícone de Excluir Steampunk -->
+                                    <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ClientsViewModel}}, Path=DeleteClientAsyncCommand}"
+                                         CommandParameter="{Binding .}"
+                                         WidthRequest="32" HeightRequest="32"
+                                         Source="delete_cross_icon.png"/>
+                                </HorizontalStackLayout>
                             </Grid>
-                        </Frame>
+
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
@@ -55,11 +78,11 @@
         <ActivityIndicator Grid.Row="0" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                            HorizontalOptions="Center" VerticalOptions="Center" />
 
-        <Button Text="+"
-                Style="{StaticResource PrimaryButton}"
-                Command="{Binding GoToAddClientPageAsyncCommand}"
-                WidthRequest="50"
-                VerticalOptions="End" HorizontalOptions="End"
-                Margin="20" />
+        <ImageButton Source="add_gear_icon.png"
+                     Command="{Binding GoToAddClientPageAsyncCommand}"
+                     WidthRequest="60"
+                     HeightRequest="60"
+                     VerticalOptions="End" HorizontalOptions="End"
+                     Margin="20" />
     </Grid>
 </ContentPage>
