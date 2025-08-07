@@ -4,11 +4,20 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:ClientsApp.Views"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
     Title="ClientsApp">
 
-    <ShellContent Title="Clientes"
-                  ContentTemplate="{DataTemplate views:ClientsPage}"
-                  Route="ClientsPage" />
+    <FlyoutItem Title="Movimento Browniano" Icon="chart_icon.png">
+        <ShellContent
+            Title="Movimento Browniano"
+            ContentTemplate="{DataTemplate views:BrownianMotionPage}"
+            Route="BrownianMotionPage" />
+    </FlyoutItem>
 
+    <FlyoutItem Title="Página de Clientes"  Icon="clients_icon.png">
+        <ShellContent
+         Title="Clientes"
+         ContentTemplate="{DataTemplate views:ClientsPage}"
+         Route="ClientsPage" />
+    </FlyoutItem>
 </Shell>
