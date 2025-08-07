@@ -19,6 +19,14 @@
         <Setter Property="Margin" Value="0,10,0,5" />
     </Style>
 
+    <Style x:Key="CyberPanelBorder" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="Transparent"  />
+    </Style>
+
+    <Style x:Key="CyberpunkPicker" TargetType="Picker" >
+        <Setter Property="BackgroundColor" Value="{StaticResource CyberText}"  />
+    </Style>
+
     <Style x:Key="CyberpunkEntry" TargetType="Entry">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{StaticResource CyberText}" />

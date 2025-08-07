@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             xmlns:viewmodels="clr-namespace:ClientsApp.ViewModels"
+             x:Class="ClientsApp.Views.BrownianMotionPage"
+             x:DataType="viewmodels:BrownianMotionViewModel"
+             Title="--[SIMULAÇÃO ESTOCÁSTICA]--"
+             BackgroundColor="{StaticResource CyberBackground}">
+
+    <Grid ColumnDefinitions="350, *">
+
+        <!-- Painel de Controles (Esquerda) -->
+        <ScrollView Grid.Column="0" VerticalScrollBarVisibility="Never">
+            <Border Style="{StaticResource CyberPanelBorder}" Margin="10" Padding="10">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Parâmetros da Simulação" Style="{StaticResource CyberpunkLabel}" FontSize="18" HorizontalOptions="Center" />
+
+                    <!-- Controles em Grid para melhor alinhamento -->
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="5">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Preço inicial:" Style="{StaticResource CyberpunkLabel}" VerticalOptions="Center"/>
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CyberpunkEntryBorder}">
+                            <Entry Keyboard="Numeric" Text="{Binding InitialPrice}" Placeholder="Ex: 100" Style="{StaticResource CyberpunkEntry}"
+                                   SemanticProperties.Description="Campo para inserir o preço inicial do ativo."
+                                   SemanticProperties.Hint="Insira um valor numérico para o preço inicial."/>
+                        </Border>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Volatilidade %:" Style="{StaticResource CyberpunkLabel}" VerticalOptions="Center"/>
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CyberpunkEntryBorder}">
+                            <Entry Keyboard="Numeric" Text="{Binding Sigma}" Placeholder="Ex: 20" Style="{StaticResource CyberpunkEntry}"
+                                   SemanticProperties.Description="Campo para inserir a volatilidade em porcentagem."
+                                   SemanticProperties.Hint="Insira um valor numérico para a volatilidade anual."/>
+                        </Border>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Taxa de Drift %:" Style="{StaticResource CyberpunkLabel}" VerticalOptions="Center"/>
+                        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource CyberpunkEntryBorder}">
+                            <Entry Keyboard="Numeric" Text="{Binding Mean}" Placeholder="Ex: 1" Style="{StaticResource CyberpunkEntry}"
+                                   SemanticProperties.Description="Campo para inserir a taxa de drift em porcentagem."
+                                   SemanticProperties.Hint="Insira um valor numérico para a taxa de crescimento esperada."/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Sliders para Período e Simulações -->
+
+                    <Label Text="{Binding Source={x:Reference NumDaysSlider}, Path=Value, StringFormat='Período: {0:F0} dias'}" Style="{StaticResource CyberpunkLabel}" Margin="0,10,0,0"/>
+                    <Slider x:Name="NumDaysSlider" Minimum="30" Maximum="365" Value="{Binding NumDays}" ThumbColor="{StaticResource CyberCyan}" MinimumTrackColor="{StaticResource CyberYellow}" MaximumTrackColor="{StaticResource CyberPanel}"
+                            SemanticProperties.Description="Seletor para o período da simulação em dias."
+                            SemanticProperties.Hint="Arraste para ajustar o número de dias, de 30 a 365."/>
+
+                    <Label Text="{Binding Source={x:Reference SimsSlider}, Path=Value, StringFormat='Nº de Simulações: {0:F0}'}" Style="{StaticResource CyberpunkLabel}" />
+                    <Slider x:Name="SimsSlider" Minimum="1" Maximum="10" Value="{Binding NumberOfSimulations}" ThumbColor="{StaticResource CyberCyan}" MinimumTrackColor="{StaticResource CyberYellow}" MaximumTrackColor="{StaticResource CyberPanel}"
+                            SemanticProperties.Description="Seletor para o número de simulações a serem executadas."
+                            SemanticProperties.Hint="Arraste para ajustar o número de trajetórias, de 1 a 10."/>
+
+                    <Label Text="Opções Visuais" Style="{StaticResource CyberpunkLabel}" FontSize="16" HorizontalOptions="Center" Margin="0,15,0,5" />
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" RowSpacing="5" VerticalOptions="Center">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Cor da Linha:" Style="{StaticResource CyberpunkLabel}" VerticalOptions="Center"/>
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CyberpunkEntryBorder}">
+                            <Picker ItemsSource="{Binding AvailableColors}"
+                                    SelectedItem="{Binding SelectedColor}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    Style="{StaticResource CyberpunkPicker}"
+                                    SemanticProperties.Description="Seletor para a cor do gráfico."
+                                    SemanticProperties.Hint="Toque para abrir a lista e escolher uma cor."/>
+                        </Border>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Preenchimento:" Style="{StaticResource CyberpunkLabel}" VerticalOptions="Center"/>
+                        <Switch Grid.Row="1" Grid.Column="1" IsToggled="{Binding IsLineFilled}" OnColor="{StaticResource CyberYellow}" ThumbColor="{StaticResource CyberCyan}" HorizontalOptions="Start"
+                                SemanticProperties.Description="Interruptor para preencher a área sob a linha do gráfico."
+                                SemanticProperties.Hint="Ative para colorir a área sob a linha, desative para mostrar apenas o contorno."/>
+                    </Grid>
+
+                    <HorizontalStackLayout Spacing="10" Margin="0,20,0,0">
+                        <Button Text="[ Rodar Simulação ]" Command="{Binding StartSimulationCommand}"
+                                Style="{StaticResource CyberpunkPrimaryButton}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                HorizontalOptions="FillAndExpand"
+                                SemanticProperties.Hint="Toque para gerar os gráficos com os parâmetros atuais."/>
+
+                        <Button Text="[ Limpar ]" Command="{Binding ClearSimulationCommand}"
+                                Style="{StaticResource CyberpunkSecondaryButton}"
+                                HorizontalOptions="FillAndExpand"
+                                SemanticProperties.Hint="Toque para remover todos os gráficos da tela."/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+
+        <!-- Área do Gráfico -->
+        <Grid Grid.Column="1">
+
+            <Border Style="{StaticResource CyberPanelBorder}" Margin="20,10,10,10">
+                <skia:SKCanvasView x:Name="canvasView" PaintSurface="OnPaintSurface" IgnorePixelScaling="False"
+                                   SemanticProperties.Description="Área de exibição do gráfico de simulação estocástica."/>
+            </Border>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           Color="{StaticResource CyberYellow}"
+                           SemanticProperties.Description="Indicador de carregamento. A simulação está em andamento."/>
+        </Grid>
+    </Grid>
+</ContentPage>
